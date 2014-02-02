@@ -1,0 +1,3 @@
+dependencies {
+    testCompile "com.jolira:hickory:1.0.0"
+}

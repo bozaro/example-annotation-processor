@@ -2,5 +2,5 @@ jar {
     manifest.attributes("Main-Class": "ru.bozaro.Sample")
 }
 dependencies {
-    compile project(":processor")
+    providedCompile project(":processor")
 }

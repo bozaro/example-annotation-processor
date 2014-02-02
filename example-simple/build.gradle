@@ -3,8 +3,17 @@ project.ext.sourceCompatibility = JavaVersion.VERSION_1_7
 subprojects {
     apply plugin: "java"
 
+    configurations {
+        providedCompile
+    }
+
     dependencies {
         compile "com.intellij:annotations:12.0"
+        testCompile "junit:junit:4.11"
+    }
+
+    sourceSets {
+        main { compileClasspath += configurations.providedCompile }
     }
 
     test {

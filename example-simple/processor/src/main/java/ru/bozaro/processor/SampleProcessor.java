@@ -24,7 +24,7 @@ public class SampleProcessor extends AbstractProcessor {
     @NotNull
     @Override
     public Set<String> getSupportedAnnotationTypes() {
-        return new HashSet<>(Arrays.<String>asList(
+        return new HashSet<>(Arrays.asList(
                 SampleAnnotation.class.getName()
         ));
     }
@@ -46,7 +46,7 @@ public class SampleProcessor extends AbstractProcessor {
             content.add(element.toString());
         }
         try {
-            FileObject resource = processingEnv.getFiler().createResource(StandardLocation.CLASS_OUTPUT, "ru.bozaro", "content.txt");
+            FileObject resource = processingEnv.getFiler().createResource(StandardLocation.SOURCE_OUTPUT, "ru.bozaro", "content.txt");
             try (Writer writer = resource.openWriter()) {
                 for (String line : content) {
                     writer.write(line + "\n");
