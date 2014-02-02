@@ -1,0 +1,4 @@
+dependencies {
+    compile files("${System.getProperty('java.home')}/../lib/tools.jar")
+    testCompile "com.jolira:hickory:1.0.0"
+}
