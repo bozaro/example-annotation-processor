@@ -37,6 +37,7 @@ public class SampleProcessor extends AbstractProcessor {
 
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
+        processingEnv.getMessager().printMessage(Diagnostic.Kind.WARNING, "Process: " + roundEnv.processingOver());
         if (roundEnv.processingOver()) {
             return true;
         }
