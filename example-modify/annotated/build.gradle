@@ -1,5 +1,5 @@
 jar {
-    manifest.attributes("Main-Class": "ru.bozaro.FortyTwo")
+    manifest.attributes("Main-Class": "ru.bozaro.HelloFortyTwo")
 }
 dependencies {
     providedCompile project(":processor")
