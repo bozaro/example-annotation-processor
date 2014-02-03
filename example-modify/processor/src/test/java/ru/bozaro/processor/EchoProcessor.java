@@ -1,20 +1,17 @@
 package ru.bozaro.processor;
 
 import com.sun.tools.javac.model.JavacElements;
-import com.sun.tools.javac.processing.JavacProcessingEnvironment;
-import com.sun.tools.javac.tree.JCTree;
-import com.sun.tools.javac.tree.TreeMaker;
-import com.sun.tools.javac.util.Context;
 import org.jetbrains.annotations.NotNull;
-import ru.bozaro.annotation.FortyTwoAnnotation;
+import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.RoundEnvironment;
+import javax.annotation.processing.SupportedAnnotationTypes;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
-import java.util.Arrays;
-import java.util.HashSet;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -22,14 +19,10 @@ import java.util.Set;
  *
  * @author Artem V. Navrotskiy (bozaro at buzzsoft.ru)
  */
-public class FortyTwoProcessor extends AbstractProcessor {
+@SupportedAnnotationTypes("*")
+public class EchoProcessor extends AbstractProcessor {
     @NotNull
-    @Override
-    public Set<String> getSupportedAnnotationTypes() {
-        return new HashSet<>(Arrays.asList(
-                FortyTwoAnnotation.class.getName()
-        ));
-    }
+    private final Map<String, String> sources = new HashMap<>();
 
     @NotNull
     @Override
@@ -42,13 +35,19 @@ public class FortyTwoProcessor extends AbstractProcessor {
         if (roundEnv.processingOver()) {
             return false;
         }
-        final Context context = ((JavacProcessingEnvironment) processingEnv).getContext();
         final JavacElements elementUtils = (JavacElements) processingEnv.getElementUtils();
-        final TreeMaker treeMaker = TreeMaker.instance(context);
-        for (Element element : roundEnv.getElementsAnnotatedWith(FortyTwoAnnotation.class)) {
-            JCTree.JCVariableDecl jcVarDecl = (JCTree.JCVariableDecl) elementUtils.getTree(element);
-            jcVarDecl.init = treeMaker.Literal(42);
+        for (Element element : roundEnv.getRootElements()) {
+            if (element instanceof TypeElement) {
+                TypeElement typeElement = (TypeElement) element;
+                String className = typeElement.getQualifiedName().toString();
+                sources.put(className, elementUtils.getTree(element).toString());
+            }
         }
         return false;
+    }
+
+    @Nullable
+    public String getSource(@NotNull String name) {
+        return sources.get(name);
     }
 }

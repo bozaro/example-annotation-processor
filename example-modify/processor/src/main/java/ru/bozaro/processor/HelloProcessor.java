@@ -41,7 +41,7 @@ public class HelloProcessor extends AbstractProcessor {
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
         if (roundEnv.processingOver()) {
-            return true;
+            return false;
         }
         final Context context = ((JavacProcessingEnvironment) processingEnv).getContext();
         final JavacElements elementUtils = (JavacElements) processingEnv.getElementUtils();
@@ -70,6 +70,6 @@ public class HelloProcessor extends AbstractProcessor {
                     jcMethodDecl.body
             ));
         }
-        return true;
+        return false;
     }
 }
