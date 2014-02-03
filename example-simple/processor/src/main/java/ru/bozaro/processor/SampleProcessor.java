@@ -39,7 +39,7 @@ public class SampleProcessor extends AbstractProcessor {
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
         processingEnv.getMessager().printMessage(Diagnostic.Kind.WARNING, "Process: " + roundEnv.processingOver());
         if (roundEnv.processingOver()) {
-            return true;
+            return false;
         }
         final List<String> content = new ArrayList<>();
         for (Element element : roundEnv.getElementsAnnotatedWith(SampleAnnotation.class)) {
@@ -56,6 +56,6 @@ public class SampleProcessor extends AbstractProcessor {
         } catch (IOException e) {
             processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, e.getMessage());
         }
-        return true;
+        return false;
     }
 }
