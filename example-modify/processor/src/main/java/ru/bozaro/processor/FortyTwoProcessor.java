@@ -47,6 +47,7 @@ public class FortyTwoProcessor extends AbstractProcessor {
         final TreeMaker treeMaker = TreeMaker.instance(context);
         for (Element element : roundEnv.getElementsAnnotatedWith(FortyTwoAnnotation.class)) {
             JCTree.JCVariableDecl jcVarDecl = (JCTree.JCVariableDecl) elementUtils.getTree(element);
+            treeMaker.pos = jcVarDecl.pos;
             jcVarDecl.init = treeMaker.Literal(42);
         }
         return false;

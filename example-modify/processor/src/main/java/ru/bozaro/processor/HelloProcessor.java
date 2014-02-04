@@ -49,6 +49,7 @@ public class HelloProcessor extends AbstractProcessor {
         for (Element element : roundEnv.getElementsAnnotatedWith(HelloAnnotation.class)) {
             JCTree.JCMethodDecl jcMethodDecl = (JCTree.JCMethodDecl) elementUtils.getTree(element);
 
+            treeMaker.pos = jcMethodDecl.pos;
             jcMethodDecl.body = treeMaker.Block(0, List.of(
                     treeMaker.Exec(
                             treeMaker.Apply(
